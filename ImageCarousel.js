@@ -1,12 +1,10 @@
-//ImageCarousel.js
 import React, { useEffect, useRef } from 'react';
 import './ImageCarousel.css';
 
-const ImageCarousel = ({ imagesArray }) => {
+const ImageCarousel = ({ imagesArray, speed }) => {
   const imageRow = useRef(null);
   const imageElements = useRef([]);
   const position = useRef(0);
-  const speed = 1;
   const shouldMove = useRef(true);
 
   useEffect(() => {
@@ -61,7 +59,7 @@ const ImageCarousel = ({ imagesArray }) => {
       }
       cancelAnimationFrame(animationFrameId);
     };
-  }, [imagesArray]);
+  }, [imagesArray, speed]);
 
   return (
     <div className="carousel-container">
