@@ -1,7 +1,9 @@
+// ImageCarousel.jsx
 import React, { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import './ImageCarousel.css';
 
-const ImageCarousel = ({ imagesArray, speed }) => {
+function ImageCarousel({ imagesArray, speed }) {
   const imageRow = useRef(null);
   const imageElements = useRef([]);
   const position = useRef(0);
@@ -31,8 +33,8 @@ const ImageCarousel = ({ imagesArray, speed }) => {
 
     const moveImages = () => {
       if (shouldMove.current && imageRow.current) {
-        let firstImage = imageElements.current[0];
-        let firstImageWidth = firstImage.offsetWidth;
+        const firstImage = imageElements.current[0];
+        const firstImageWidth = firstImage.offsetWidth;
 
         if (position.current <= -firstImageWidth) {
           imageRow.current.appendChild(firstImage);
@@ -41,7 +43,7 @@ const ImageCarousel = ({ imagesArray, speed }) => {
         }
 
         position.current -= speed;
-        imageRow.current.style.left = position.current + 'px';
+        imageRow.current.style.left = `${position.current}px`;
       }
 
       animationFrameId = requestAnimationFrame(moveImages);
@@ -63,9 +65,14 @@ const ImageCarousel = ({ imagesArray, speed }) => {
 
   return (
     <div className="carousel-container">
-      <div className="image-row" ref={imageRow}></div>
+      <div className="image-row" ref={imageRow} />
     </div>
   );
+}
+
+ImageCarousel.propTypes = {
+  imagesArray: PropTypes.arrayOf(PropTypes.string).isRequired,
+  speed: PropTypes.number.isRequired,
 };
 
 export default ImageCarousel;
