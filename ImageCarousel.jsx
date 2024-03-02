@@ -34,18 +34,20 @@ function ImageCarousel({ imagesArray, speed }) {
     const moveImages = () => {
       if (shouldMove.current && imageRow.current) {
         const firstImage = imageElements.current[0];
-        const firstImageWidth = firstImage.offsetWidth;
-
+        // Assuming a CSS margin is applied to each side of the image, you'll need to double it for total margin
+        const imageMargin = parseInt(getComputedStyle(firstImage).marginLeft) + parseInt(getComputedStyle(firstImage).marginRight);
+        const firstImageWidth = firstImage.offsetWidth + imageMargin; // Include the margin in the width
+    
         if (position.current <= -firstImageWidth) {
           imageRow.current.appendChild(firstImage);
           imageElements.current.push(imageElements.current.shift());
-          position.current += firstImageWidth;
+          position.current += firstImageWidth; // Adjust position considering the margin
         }
-
+    
         position.current -= speed;
         imageRow.current.style.left = `${position.current}px`;
       }
-
+    
       animationFrameId = requestAnimationFrame(moveImages);
     };
 
